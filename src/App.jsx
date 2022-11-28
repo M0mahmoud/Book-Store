@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-import Header from './Components/Header';
-import Container from './Components/Container';
-import AddBook from './Components/AddBook';
-import BookContainer from './Components/Book/BookContainer';
+import Header from "./Components/Header";
+import Container from "./Components/Container";
+import { useSelector } from "react-redux";
+import Login from "./Components/Login";
 
 const App = () => {
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
   return (
     <>
       <Header />
-      <Container>
-        <AddBook />
-        <BookContainer />
-      </Container>
+      {!isLoggedIn ? <Login /> : <Container />}
     </>
   );
 };

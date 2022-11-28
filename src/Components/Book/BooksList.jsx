@@ -1,13 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { bookInfo } from "../../store/bookSlice";
 
-const BooksList = ({
-  isLoading,
-  books,
-  isLoggedIn,
-  dispatch,
-  deleteBook,
-  getBookID,
-}) => {
+const BooksList = ({ isLoading, books, isLoggedIn, dispatch, deleteBook }) => {
+  const navigate = useNavigate();
   const deleteBookHandler = (book) => {
     dispatch(deleteBook(book))
       .unwrap()
@@ -26,11 +22,13 @@ const BooksList = ({
         >
           <div>{book.title}</div>
           <div className="btn-group" role="group">
-            {/* onClick={()=>{dispatch(bookInfo(book))}} */}
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => getBookID(book.id)}
+              onClick={() => {
+                dispatch(bookInfo(book));
+                navigate(`/bookInfo/${book.id}`);
+              }}
             >
               Read
             </button>
@@ -51,7 +49,7 @@ const BooksList = ({
 
   return (
     <div>
-      <h2>Books List</h2>
+      <h2 className="my-3">Books List</h2>
       {isLoading ? (
         "Loading..."
       ) : (
